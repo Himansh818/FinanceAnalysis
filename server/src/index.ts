@@ -17,6 +17,7 @@ const stocks: Stock[] = [
   { id: 1, company: "Tesla", price: 220, date: "2026-05-01" },
   { id: 2, company: "Apple", price: 180, date: "2026-05-02" },
   { id: 3, company: "Google", price: 250, date: "2026-05-03" },
+  { id: 4, company: "JPMorgan", price: 180, date: "2026-05-04" },
 ];
 
 app.get("/", (req, res) => {
