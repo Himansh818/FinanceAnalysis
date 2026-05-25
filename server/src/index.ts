@@ -1,31 +1,38 @@
 import express from "express";
 import cors from "cors";
+import { pool } from "./db";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-type Stock = {
-  id: number;
-  company: string;
-  price: number;
-  date: string;
-};
-
-const stocks: Stock[] = [
-  { id: 1, company: "Tesla", price: 220, date: "2026-05-01" },
-  { id: 2, company: "Apple", price: 180, date: "2026-05-02" },
-  { id: 3, company: "Google", price: 250, date: "2026-05-03" },
-  { id: 4, company: "JPMorgan", price: 180, date: "2026-05-04" },
-];
-
 app.get("/", (req, res) => {
   res.send("Finance API running 🚀");
 });
 
-app.get("/stocks", (req, res) => {
-  res.json(stocks);
+app.post("/stock", async (req, res) => {
+  const { company, price, date } = req.body;
+
+  const result = await pool.query(
+    "INSERT INTO stocks (company, price, date) VALUES ($1, $2, $3) RETURNING *",
+    [company, price, date]
+  );
+
+  res.json({
+    message: "Added stock successfully!",
+    stock: result.rows[0],
+  });
+});
+
+app.get("/stocks", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM stocks ORDER BY id ASC"
+  );
+
+  res.json({
+    result:result.rows,
+  });
 });
 
 app.listen(5000, () => {

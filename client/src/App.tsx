@@ -37,22 +37,25 @@ function App() {
   const prices = stocks.map((s) => s.price);
 
   const data = {
-    labels,
-    datasets: [
-      {
-        label: "Stock Price 📊",
-        data: prices,
-        borderColor: "blue",
-        tension: 0.3,
-      },
-    ],
-  };
+  labels: labels || [],
+  datasets: [
+    {
+      label: "Stock Price 📊",
+      data: prices || [],
+      borderColor: "blue",
+      tension: 0.3,
+    },
+  ],
+};
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/stocks")
-      .then((res) => setStocks(res.data));
-  }, []);
+ useEffect(() => {
+  axios
+    .get("http://localhost:5000/stocks")
+    .then((res) => {
+      setStocks(res.data.result);
+    })
+    .catch((err) => console.log(err));
+}, []);
 
   return (
     <>
