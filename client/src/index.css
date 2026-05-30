@@ -109,3 +109,53 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.main{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+#center{
+  display: flex;
+  justify-content: space-around;
+}
+#down{
+  background-color: #aa3bff;
+  height: 10vh;
+  width: 100%;
+  padding: 20px;
+}
+.addStocks{
+  padding: 3px;
+  display: flex;
+  gap: 4px;
+  height: 100%;
+  width: 100%;
+}
+.addStocks input{
+  padding: 4px 10px;
+  background: whitesmoke;
+  font-size: larger;
+  color: black;
+  height: 80%;
+  width: 80%;
+}
+.addStocks button{
+  padding: 3px 4px;
+  font-size: larger;
+  height: 90%;
+  width: 20%;
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+.addStocks button:hover{
+  background-color: rgb(48, 204, 48);
+}
+.addStocks button:active{
+  background-color: rgb(2, 183, 2);
+  scale: 0.9;
+}

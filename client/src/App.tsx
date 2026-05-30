@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -33,8 +32,9 @@ type Stock = {
 
 function App() {
   const [stocks, setStocks] = useState<Stock[]>([]);
-  const labels = stocks.map((s) => s.date);
+  const labels  = stocks.map((s) => s.date);
   const prices = stocks.map((s) => s.price);
+  const [sto, setSto] = useState<string>("");
 
   const data = {
   labels: labels || [],
@@ -55,13 +55,14 @@ function App() {
       setStocks(res.data.result);
     })
     .catch((err) => console.log(err));
-}, []);
+}, []);                  
 
   return (
     <>
+    <div className="main">
       <section id="center">
         <div>
-          <h1>Finance Dashboard 📊</h1>
+          <h1>Stocks Lists 📊</h1>
 
           {stocks.map((s) => (
             <div key={s.id}>
@@ -76,6 +77,26 @@ function App() {
           <Line data={data} />
         </div>
       </section>
+      <section id="down">
+          <form className="addStocks"
+          onSubmit={(e)=>{
+              e.preventDefault();
+              console.log(sto);
+              setSto("");
+            }}>
+            <input 
+            value={sto}
+            onChange={(e)=>{
+              setSto(e.target.value);
+            }}
+            type="text" placeholder="Add Stocks.." />
+            <button type="submit">
+              Put In
+            </button>
+          </form>
+      </section>
+    </div>
+      
     </>
   );
 }
