@@ -1,27 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import Graph from "./components/Graph";
+import StockList from "./components/StockList";
 
-import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
 
 type Stock = {
   id: number;
@@ -32,71 +13,105 @@ type Stock = {
 
 function App() {
   const [stocks, setStocks] = useState<Stock[]>([]);
-  const labels  = stocks.map((s) => s.date);
-  const prices = stocks.map((s) => s.price);
-  const [sto, setSto] = useState<string>("");
+  const [stockForm, setStockForm] = useState({
+    company: "",
+    price: "",
+    date: "",
+  });
 
-  const data = {
-  labels: labels || [],
-  datasets: [
-    {
-      label: "Stock Price 📊",
-      data: prices || [],
-      borderColor: "blue",
-      tension: 0.3,
-    },
-  ],
-};
-
- useEffect(() => {
-  axios
-    .get("http://localhost:5000/stocks")
-    .then((res) => {
-      setStocks(res.data.result);
-    })
-    .catch((err) => console.log(err));
-}, []);                  
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/stocks")
+      .then((res) => {
+        setStocks(res.data.result);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
-    <div className="main">
-      <section id="center">
-        <div>
-          <h1>Stocks Lists 📊</h1>
-
-          {stocks.map((s) => (
-            <div key={s.id}>
-              {s.company} - ₹{s.price}
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h1>Finance Dashboard 📊</h1>
-
-          <Line data={data} />
-        </div>
-      </section>
-      <section id="down">
-          <form className="addStocks"
-          onSubmit={(e)=>{
+      <div className="main">
+        <section id="center">
+          <div>
+            
+            <StockList />
+           
+          </div>
+          <div>
+            <h1>Finance Dashboard 📊</h1>
+            <Graph />
+          </div>
+        </section>
+        <section id="down">
+          <form
+            className="addStocks"
+            onSubmit={async (e) => {
               e.preventDefault();
-              console.log(sto);
-              setSto("");
-            }}>
-            <input 
-            value={sto}
-            onChange={(e)=>{
-              setSto(e.target.value);
+
+              try {
+
+                console.log(stockForm);
+                alert("hogya !")
+                await axios.post("http://localhost:5000/stocks", {
+                  company: stockForm.company,
+                  price: Number(stockForm.price),
+                  date: stockForm.date,
+                });
+
+                const res = await axios.get("http://localhost:5000/stocks");
+                setStocks(res.data.result);
+                console.log(stocks)
+                setStockForm({
+                  company: "",
+                  price: "",
+                  date: "",
+                });
+                
+              } catch (error) {
+                console.log(error);
+              }
             }}
-            type="text" placeholder="Add Stocks.." />
-            <button type="submit">
-              Put In
-            </button>
+          >
+            <h3>Add Stock</h3>
+            <input
+              type="text"
+              placeholder="Company Name"
+              value={stockForm.company}
+              onChange={(e) => {
+                setStockForm({
+                  ...stockForm,
+                  company: e.target.value,
+                });
+              }}
+            />
+
+            <input
+              type="Number"
+              placeholder="Company Price"
+              value={stockForm.price}
+              onChange={(e) => {
+                setStockForm({
+                  ...stockForm,
+                  price: e.target.value,
+                });
+              }}
+            />
+
+            <input
+              type="date"
+              placeholder="Date"
+              value={stockForm.date}
+              onChange={(e) => {
+                setStockForm({
+                  ...stockForm,
+                  date: e.target.value,
+                });
+              }}
+            />
+            <button type="submit">Put In</button>
           </form>
-      </section>
-    </div>
-      
+        </section>
+      </div>
     </>
   );
 }
