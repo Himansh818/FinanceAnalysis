@@ -121,3 +121,55 @@ body{
   background-color: black;
   color: white;
 }
+.header{
+  animation: fadeUpIn forwards 2s ease-in;
+  display: flex;
+  height: 50vh;
+  width: 100%;
+  color: whitesmoke;
+  border-radius: 20px;
+  background: linear-gradient(rgb(23, 23, 43),rgb(26, 26, 70), rgb(178, 210, 240));
+}
+ 
+@keyframes fadeUpIn {
+  0%{
+    opacity: 0;
+    transform: translateY(-100px) ;
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px) ;
+    
+  }
+}
+
+.stockLists{
+  animation: fadeInLeft forwards 2s ease-in;
+}
+.Graph{
+  animation: fadeInRight forwards 2s ease-in;
+}
+
+
+@keyframes fadeInLeft {
+  0%{
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0px);
+
+  }
+}
+@keyframes fadeInRight {
+  0%{
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0px);
+
+  }
+}

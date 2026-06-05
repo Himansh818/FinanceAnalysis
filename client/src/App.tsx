@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Graph from "./components/Graph";
 import StockList from "./components/StockList";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import './pp.css';
 
 
 type Stock = {
@@ -30,6 +33,7 @@ function App() {
 
   return (
     <>
+    <Header />
       <div className="main">
         <section id="center">
           <div>
@@ -38,10 +42,12 @@ function App() {
            
           </div>
           <div>
-            <h1>Finance Dashboard 📊</h1>
+            
             <Graph />
+
           </div>
         </section>
+        
         <section id="down">
           <form
             className="addStocks"
@@ -50,13 +56,13 @@ function App() {
 
               try {
 
-                console.log(stockForm);
-                alert("hogya !")
+                // console.log(stockForm);
                 await axios.post("http://localhost:5000/stocks", {
                   company: stockForm.company,
                   price: Number(stockForm.price),
                   date: stockForm.date,
                 });
+                alert("hogya !")
 
                 const res = await axios.get("http://localhost:5000/stocks");
                 setStocks(res.data.result);
@@ -112,6 +118,7 @@ function App() {
           </form>
         </section>
       </div>
+      <Footer />
     </>
   );
 }

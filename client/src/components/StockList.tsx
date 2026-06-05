@@ -21,7 +21,7 @@ const StockList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="stockLists">
       <h1>Stocks Lists 📊</h1>
 
             {stocks.map((s) => (

@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #f5f7fb;
+  color: #1e293b;
+}
+
+.main {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  padding: 20px;
+}
+
+#center {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+#down {
+  display: flex;
+  justify-content: center;
+}
+
+.addStocks {
+  width: 100%;
+  max-width: 600px;
+
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.addStocks h3 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.addStocks input {
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+}
+
+.addStocks input:focus {
+  border-color: #2563eb;
+}
+
+.addStocks button {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.addStocks button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 900px) {
+  #center {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .addStocks {
+    padding: 20px;
+  }
+
+  .addStocks h3 {
+    font-size: 1.2rem;
+  }
+
+  .addStocks input,
+  .addStocks button {
+    width: 100%;
+  }
+}

@@ -56,7 +56,8 @@ const Graph = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div>
+    <div className="Graph">
+      <h1>Finance Dashboard 📊</h1>
       <Line data={data} />
     </div>
   );
