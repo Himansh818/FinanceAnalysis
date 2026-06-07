@@ -4,8 +4,11 @@ import Graph from "./components/Graph";
 import StockList from "./components/StockList";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import './pp.css';
-
+import "./pp.css";
+import MarketOverview from "./components/MarketOverview";
+import PortfolioSummary from "./components/PortfolioSummary";
+import MarketMovers from "./components/MarketMovers";
+import RecentNews from "./components/RecentNews";
 
 type Stock = {
   id: number;
@@ -33,46 +36,55 @@ function App() {
 
   return (
     <>
-    <Header />
-      <div className="main">
-        <section id="center">
-          <div>
-            
-            <StockList />
-           
-          </div>
-          <div>
-            
-            <Graph />
+      <div className="min-h-screen bg-slate-900 text-white">
+        <Header />
+        <MarketOverview />
 
+        {/* Rest of App */}
+
+
+        <PortfolioSummary />
+
+        <div className="px-4 md:px-6 py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-4">
+              <StockList />
+            </div>
+
+            <div className="lg:col-span-8">
+              <Graph />
+            </div>
           </div>
-        </section>
-        
+        </div>
+
+        <MarketMovers />
+
+        <RecentNews />
+
         <section id="down">
+          {/* Add Stock Form */}
           <form
             className="addStocks"
             onSubmit={async (e) => {
               e.preventDefault();
 
               try {
-
                 // console.log(stockForm);
                 await axios.post("http://localhost:5000/stocks", {
                   company: stockForm.company,
                   price: Number(stockForm.price),
                   date: stockForm.date,
                 });
-                alert("hogya !")
+                alert("hogya !");
 
                 const res = await axios.get("http://localhost:5000/stocks");
                 setStocks(res.data.result);
-                console.log(stocks)
+                console.log(stocks);
                 setStockForm({
                   company: "",
                   price: "",
                   date: "",
                 });
-                
               } catch (error) {
                 console.log(error);
               }
@@ -117,8 +129,9 @@ function App() {
             <button type="submit">Put In</button>
           </form>
         </section>
+
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
